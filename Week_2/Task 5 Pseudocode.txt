@@ -1,0 +1,16 @@
+START
+
+import math
+
+pi = math.pi
+function(x) = 3*sin(pi*x) + 2*cos(pi*x)
+
+startVal = input("Enter the starting value:")
+interval = input("Enter the interval:")
+
+print("Value of x\tValue of f(x)")
+
+for i in range (0,3):
+    currentX = startVal + i*interval
+    print(currentX"\t"function(currentX))
+    

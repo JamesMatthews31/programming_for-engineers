@@ -1,0 +1,11 @@
+START 
+
+int sensorID = 99
+float temperature = 12.34
+char status = 'A'
+
+print("Sensor ID: "sensorID)
+print("Temperature: "temperature)
+print("Status Code: "status)
+
+END
