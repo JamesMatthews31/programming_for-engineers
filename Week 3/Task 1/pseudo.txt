@@ -1,0 +1,11 @@
+START 
+fetch input
+set as min value
+fetch input 2
+compare to min value, assign to min value if lower
+fetch input 3
+compare to min value, assign to min value if lower
+fetch input 4
+compare to min value, assign to min value if lower
+print min value
+END

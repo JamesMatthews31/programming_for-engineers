@@ -1,7 +1,19 @@
+/*
+Filename: Task 6.c
+Description: Write a program that takes two numbers and one of the following operators: +, -,
+*, /, %, ^. It should then perform the requested operation. Use switch to handle the different
+operators. The ^ operator can be implemented with the pow() function from <math.h>.
+Author: James Matthews
+Date: 10/02/2026
+Version: 1.0
+Log:
+*/
+
 #include <stdio.h>
 #include <math.h>
 
 int main(){
+    // Collects inputs
     printf("Enter a number:");
     float num1;
     scanf("%f",&num1);
@@ -12,6 +24,7 @@ int main(){
     char operator;
     scanf(" %c",&operator);
     switch(operator){
+        // Switch to carry out appropriate operation. Also includes division by zero error handling.
         case '+':
             printf("%f",num1 + num2);
             break;

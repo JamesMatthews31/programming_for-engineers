@@ -10,14 +10,18 @@ Log:
 
 #include <stdio.h>
 
+// Function prototype
+
 void splitTime(long totalSec, int *hr, int *min, int *sec);
 
 int main(void){
-    int hours, minutes,seconds;
+    int hours, minutes, seconds;
     long total = 3661;
     splitTime(total, &hours, &minutes, &seconds);
     printf("Time: %d:%d:%d\n",hours,minutes,seconds); 
 }
+
+// Function body
 
 void splitTime(long totalSec, int *hr, int *min, int *sec){
     *hr = totalSec / 3600;

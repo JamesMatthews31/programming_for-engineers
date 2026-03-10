@@ -1,0 +1,19 @@
+START
+
+define bubbleSort(array, size of array):
+    for every item in array:
+        for every item in the array - number of items already sorted:
+            if current value > next value:
+                temp = current value
+                current value = next value
+                next value = temp
+
+    return
+
+
+fetch 4 number and assign to array
+call bubbleSort(array,4)
+print numbers in ascending order
+print numbers in descending order
+
+END

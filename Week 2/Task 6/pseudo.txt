@@ -1,0 +1,6 @@
+START
+seed random number using current time
+take input for max key value
+use key max key value to generate random number
+print random number
+END

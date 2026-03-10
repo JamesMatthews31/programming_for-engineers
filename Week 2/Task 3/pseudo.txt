@@ -1,0 +1,5 @@
+START
+take mph input
+multiply by constant to get kph
+print result
+END

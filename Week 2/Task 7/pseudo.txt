@@ -1,0 +1,8 @@
+START
+collect value for first number
+collect value for second number
+assign first number to temp number
+set sfirst number equal to second number
+set second number equal to temp number
+return values
+END

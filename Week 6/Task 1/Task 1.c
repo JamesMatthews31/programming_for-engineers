@@ -1,6 +1,7 @@
 /*
 Filename: Task 1.c
-Description: Template program to undertand the use of * and & in C.
+Description: The Goal: This exercise demonstrates the most important rule of pointers: never use a pointer before it points to
+a valid memory location.
 Author: James Matthews
 Date: 03/03/2026
 Version: 1.0
