@@ -1,0 +1,33 @@
+START
+include time libray
+
+define structure alias date:
+    int day 
+    int month 
+    int year
+
+define structure alias age:
+    int years 
+    int months
+    int days
+
+main:
+create date struct dob
+create age struct userAge
+fetch current time into imported structure
+ask for year, month and day of birth
+calculate age using:
+years = fetched year + 1900 - input year (imported module counts from 1900)
+months = fetched month + 1 -input month (imported module months are 0-11)
+day = fetched - input
+as this will set year first, must account for negative months and days
+if day < 0:
+    month -= 1
+    days += 30
+if months < 0:
+    years -= 1
+    months += 12
+
+END
+
+https://www.w3schools.com/c/c_date_time.php

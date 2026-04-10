@@ -1,0 +1,39 @@
+define structure alias point:
+    float x
+    float y
+
+define structure alias rectangle:
+    point upperLeft
+    point lowerRight
+
+func prototypes:
+
+float area(rectangle)
+point centre(rectangle)
+void translate(pointer to rectangle, float x, float y)
+
+main:
+    define rectangle r 
+    float x,y
+    collect upperLeft and lower right coordinates
+    collect translation
+    calc and print area
+    calc and print centre
+    translate
+    print new coordinates
+
+float area(rectangle):
+    return (lowerRightx - upperLeftx) * (upperLefty - lowerRighty)
+
+point centre(rectangle):
+    point centrePoint
+    centrePointx = upperLeftx + lowerRightx /2
+    centrePointy = upperLefty + lowerRighty /2
+    return centrePoint
+
+void translate(rectangle, float x, float y)
+    values of:
+    upperLeft x += x
+    upperLeft y += y
+    lowerRight x += x
+    lowerRight y += y
