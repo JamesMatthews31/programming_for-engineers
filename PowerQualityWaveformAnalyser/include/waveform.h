@@ -27,6 +27,5 @@ float computeDCOffset(float phaseRMSVoltages[]);
 
 float computeClipping(waveform waveformLog[]); 
 
-
 #endif
 // End of header guard
