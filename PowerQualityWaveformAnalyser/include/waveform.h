@@ -8,13 +8,13 @@
 
 typedef struct{
     float timestamp;
-    float phaseAVoltage;
-    float phaseBVoltage;
-    float phaseCVoltage;
-    float lineCurrent;
-    float frequency;
-    float powerFactor;
-    float thdPercent;
+    double phaseAVoltage;
+    double phaseBVoltage;
+    double phaseCVoltage;
+    double lineCurrent;
+    double frequency;
+    double powerFactor;
+    double thdPercent;
 } waveform;
 
 // Function prototypes for waveform calculations
