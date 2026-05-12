@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\james\Documents\GitHub\programming_for-engineers\PowerQualityWaveformAnalyser\src\io.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\james\Documents\GitHub\programming_for-engineers\PowerQualityWaveformAnalyser\src\waveform.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\james\Documents\GitHub\programming_for-engineers\PowerQualityWaveformAnalyser\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{1FF6348B-5F1A-31D9-9F2F-F649F7710FA4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

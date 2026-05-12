@@ -1,0 +1,3 @@
+C:/Users/james/Documents/GitHub/programming_for-engineers/PowerQualityWaveformAnalyser/build/CMakeFiles/PowerQualityWaveformAnalyser.dir
+C:/Users/james/Documents/GitHub/programming_for-engineers/PowerQualityWaveformAnalyser/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/james/Documents/GitHub/programming_for-engineers/PowerQualityWaveformAnalyser/build/CMakeFiles/ZERO_CHECK.dir
