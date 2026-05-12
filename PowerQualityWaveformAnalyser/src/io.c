@@ -53,4 +53,6 @@ int readInput(char *filePath[]){
 
     }
 
+    return 0;
+
 }

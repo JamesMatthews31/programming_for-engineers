@@ -19,13 +19,13 @@ typedef struct{
 
 // Function prototypes for waveform calculations
 
-float computeRMS(waveform waveformLog[]); 
+float computeRMS(waveform *waveformLog[]); 
 
-float computeP2P(waveform waveformLog[]); 
+float computeP2P(waveform *waveformLog[]); 
 
-float computeDCOffset(float phaseRMSVoltages[]); 
+float computeDCOffset(float *phaseRMSVoltages[]); 
 
-float computeClipping(waveform waveformLog[]); 
+float computeClipping(waveform *waveformLog[]); 
 
 #endif
 // End of header guard
