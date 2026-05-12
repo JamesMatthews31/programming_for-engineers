@@ -17,13 +17,27 @@ int readInput(char *filePath[]){
 
     // Initialise variables that will be needed to read the file
     char currentLine[200];
-    int lineCountEst = 1000;
     int count = 0;
+    int lineCount = 0;
 
+    // Gets the header row before the loop so that it is skipped
 
-    
-    waveform *waveformLog = malloc(lineCountEst * sizeof(waveform));
+    fgets(currentLine, sizeof(currentLine), filePointer);
 
+    // Counts number of rows in file
+    while (fgets(currentLine, sizeof(currentLine), filePointer) != NULL){
+        lineCount++;
+    }
+
+    rewind(filePointer);
+
+    // Create the array to store the csv file contents in the heap based on lines read
+
+    waveform *waveformLog = malloc(lineCount * sizeof(waveform));
+
+    fgets(currentLine, sizeof(currentLine), filePointer);
+
+    // Iterates through all rows of the csv and uses sscanf to split the entry at commas and immediately assign to the waveform structure array
     while (fgets(currentLine, sizeof(currentLine), filePointer) != NULL){
 
         sscanf(currentLine, "%f,%lf,%lf,%lf,%lf,%lf,%lf,%lf", 
@@ -36,7 +50,7 @@ int readInput(char *filePath[]){
             &waveformLog[count].powerFactor, 
             &waveformLog[count].thdPercent);
         count++;
+
     }
 
-    
 }
