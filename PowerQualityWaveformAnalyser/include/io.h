@@ -4,8 +4,8 @@
 #ifndef IO_H
 #define IO_H
 
-int readInput(char *filePath[]);
-int writeOutput(char *filePath[], float calcOutput[]);
+int readInput(char *filePath);
+int writeOutput(char *filePath, float *calcOutput);
 
 #endif
 // End of header guard

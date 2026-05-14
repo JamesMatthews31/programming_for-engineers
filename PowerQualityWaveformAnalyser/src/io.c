@@ -2,7 +2,7 @@
 #include "waveform.h"
 #include <stdio.h>
 
-int readInput(char *filePath[]){
+int readInput(char *filePath){
     // Create pointer to file
     FILE *filePointer;
 
