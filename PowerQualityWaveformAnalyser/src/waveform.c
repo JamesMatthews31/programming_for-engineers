@@ -1,10 +1,24 @@
+/*
+Filename: waveform.c
+Description: Header file source code for all calculation functions
+Author: James Matthews
+Date: 15/05/2026
+Version: 0.1.0
+Log:
+Version 0.1.0:
+- First stage that implementation seems to be complete, any testing yet to be done.
+*/
+
+
 #include "waveform.h"
 #include <stdio.h>
 #include <math.h>
 
+// Function to allocate memory to the heap
+
 float storageSetup(void){
 
-    // Subroutine to allocate memory in the heap for each of the storage arrays for output of analysis functions.
+    // Allocates memory to the heap for storage arrays
 
     float *RMSValues = malloc(3 * sizeof(float));
     float *P2PValues = malloc(3 * sizeof(float));
@@ -20,6 +34,8 @@ float storageSetup(void){
     }
 
 }
+
+// Function to calculate the RMS of each phase
 
 float computeRMS(waveform *waveformLog, double *RMSValues, int sampleCount){
 
@@ -53,6 +69,8 @@ float computeRMS(waveform *waveformLog, double *RMSValues, int sampleCount){
     return 0;
 }
 
+// Function to compute the P2P values of each phase
+
 float computeP2P(waveform *waveformLog, float *P2PValues, float *RMSValues,int sampleCount){
 
     // Takes the RMS output of the previous subroutine and multiplies it by 2 sqrt 2 to give peak to peak amplitude
@@ -64,6 +82,8 @@ float computeP2P(waveform *waveformLog, float *P2PValues, float *RMSValues,int s
     return 0;
 
 }
+
+// Function to compute the DC Offset of each phase
 
 float computeDCOffset(waveform *waveformLog, float *DCOffsetValues, int sampleCount){
 
@@ -88,13 +108,15 @@ float computeDCOffset(waveform *waveformLog, float *DCOffsetValues, int sampleCo
 
         // Divide values by 1000 for final output
 
-        DCOffsetValues[i] /= 1000;
+        DCOffsetValues[i] /= sampleCount;
 
     }
 
     return;
 
 }
+
+// Function to detect any clipping values
 
 float detectClipping(waveform *waveformLog, int sampleCount, int *clippingCounts){
 
@@ -135,5 +157,18 @@ float detectClipping(waveform *waveformLog, int sampleCount, int *clippingCounts
         }
 
     return;
+
+}
+
+// Function using all previous functions at once. This is to make main.c cleaner.
+
+float calcAll(waveform *waveformLog, double *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts, int sampleCount){
+
+    storageSetup();
+
+    computeRMS(waveformLog, RMSValues, sampleCount);
+    computeP2P(waveformLog, P2PValues, RMSValues, sampleCount);
+    computeDCOffset(waveformLog, DCOffsetValues, sampleCount);
+    detectClipping(waveformLog, sampleCount, clippingCounts);
 
 }

@@ -1,18 +1,47 @@
+/*
+Filename: io.c
+Description: Header file source code for io functions (Reading from csv and writing to txt file)
+Author: James Matthews
+Date: 15/05/2026
+Version: 0.0.1
+Log:
+- Version 0.0.1: readInput implemented, yet to do output
+*/
+
 #include "io.h"
 #include "waveform.h"
 #include <stdio.h>
 
-int readInput(char *filePath){
-    // Create pointer to file
-    FILE *filePointer;
+int readInput(){
 
-    // Connect the file to the pointer to read
-    filePointer = fopen(filePath[0], "r");
+    FILE *filePointer = NULL;
 
-    // Check that file exists and return error if not
-    if (filePointer == NULL){
-        printf("Error, could not open file.");
-        return 1;
+    while (filePointer == NULL){
+
+        // Create temp variable to store filePath directory
+        
+        char filePath[500];
+
+        // Ask user for directory input
+
+        printf("Enter the directory of the .csv file to be analysed: \n");
+
+        // Scan directory into filePath
+
+        fgets(filePath, 500, stdin);
+
+        // Create pointer to file
+        FILE *filePointer;
+
+        // Connect the file to the pointer to read
+        filePointer = fopen(filePath, "r");
+
+        // Check that file exists and return error if not
+        if (filePointer == NULL){
+            printf("Error, could not open file. Please try again");
+            fclose(filePointer);
+        }
+
     }
 
     // Initialise variables that will be needed to read the file
@@ -52,6 +81,8 @@ int readInput(char *filePath){
         count++;
 
     }
+
+    fclose(filePointer);
 
     return 0;
 

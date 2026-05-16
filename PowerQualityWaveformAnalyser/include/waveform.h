@@ -1,4 +1,12 @@
-// Header file for waveform data structure and calculation functions
+/*
+Filename: waveform.h
+Description: Header file for waveform and waveform calculation functions
+Author: James Matthews
+Date: 15/05/2026
+Version: 0.1
+Log:
+- Version 0.1: All known structs and function prototypes implemented with header guard
+*/
 
 // Start of header guard
 #ifndef WAVEFORM_H
@@ -34,6 +42,8 @@ float computeP2P(waveform *waveformLog, float *P2PValues, float *RMSValues,int s
 // Computes the DC offset by adding up all values and dividing my the number of samples
 
 float computeDCOffset(waveform *waveformLog, float *DCOffsetValues, int sampleCount); 
+
+// Detect all values outside of the clipping range
 
 float detectClipping(waveform *waveformLog, int sampleCount, int *clippingCounts); 
 
