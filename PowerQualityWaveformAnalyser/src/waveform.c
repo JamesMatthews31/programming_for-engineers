@@ -16,14 +16,14 @@ Version 0.1.0:
 
 // Function to allocate memory to the heap
 
-float storageSetup(void){
+float storageSetup(float *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts){
 
     // Allocates memory to the heap for storage arrays
 
-    float *RMSValues = malloc(3 * sizeof(float));
-    float *P2PValues = malloc(3 * sizeof(float));
-    float *DCOffsetValues = malloc(3 * sizeof(float));
-    float *clippingCounts = malloc(3 * sizeof(int));
+    RMSValues = malloc(3 * sizeof(float));
+    P2PValues = malloc(3 * sizeof(float));
+    DCOffsetValues = malloc(3 * sizeof(float));
+    clippingCounts = malloc(3 * sizeof(int));
 
     for (int i = 0; i < 3; i++){
 
@@ -164,7 +164,7 @@ float detectClipping(waveform *waveformLog, int sampleCount, int *clippingCounts
 
 float calcAll(waveform *waveformLog, double *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts, int sampleCount){
 
-    storageSetup();
+    storageSetup(RMSValues, P2PValues, DCOffsetValues, clippingCounts);
 
     computeRMS(waveformLog, RMSValues, sampleCount);
     computeP2P(waveformLog, P2PValues, RMSValues, sampleCount);

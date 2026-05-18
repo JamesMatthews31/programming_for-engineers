@@ -12,7 +12,7 @@ Log:
 #include "waveform.h"
 #include <stdio.h>
 
-int readInput(){
+int readInput(waveform *waveformLog){
 
     FILE *filePointer = NULL;
 
@@ -28,10 +28,7 @@ int readInput(){
 
         // Scan directory into filePath
 
-        fgets(filePath, 500, stdin);
-
-        // Create pointer to file
-        FILE *filePointer;
+        scanf("%s", filePath);
 
         // Connect the file to the pointer to read
         filePointer = fopen(filePath, "r");
@@ -39,7 +36,6 @@ int readInput(){
         // Check that file exists and return error if not
         if (filePointer == NULL){
             printf("Error, could not open file. Please try again");
-            fclose(filePointer);
         }
 
     }
@@ -62,7 +58,7 @@ int readInput(){
 
     // Create the array to store the csv file contents in the heap based on lines read
 
-    waveform *waveformLog = malloc(lineCount * sizeof(waveform));
+    waveformLog = malloc(lineCount * sizeof(waveform));
 
     fgets(currentLine, sizeof(currentLine), filePointer);
 
@@ -84,6 +80,8 @@ int readInput(){
 
     fclose(filePointer);
 
-    return 0;
+    return lineCount;
 
 }
+
+

@@ -356,6 +356,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="C:\Users\james\Documents\GitHub\programming_for-engineers\PowerQualityWaveformAnalyser\src\main.c" />
     <ClCompile Include="C:\Users\james\Documents\GitHub\programming_for-engineers\PowerQualityWaveformAnalyser\src\io.c" />
     <ClCompile Include="C:\Users\james\Documents\GitHub\programming_for-engineers\PowerQualityWaveformAnalyser\src\waveform.c" />
   </ItemGroup>

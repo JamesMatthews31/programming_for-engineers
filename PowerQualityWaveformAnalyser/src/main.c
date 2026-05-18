@@ -14,9 +14,16 @@ Version 0.1.0:
 
 int main(){
 
-    readInput();
+    waveform *waveformLog;
+    float *RMSValues;
+    float *P2PValues;
+    float *DCOffsetValues;
+    int *clippingCounts;
+    int *sampleCount;
 
-
+    sampleCount = readInput(&waveformLog);
+    storageSetup();
+    calcAll(&waveformLog, &RMSValues, &P2PValues, &DCOffsetValues, &clippingCounts, &sampleCount);
 
     return 0;
 }

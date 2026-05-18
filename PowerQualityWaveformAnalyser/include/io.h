@@ -9,10 +9,11 @@ Log:
 */
 
 // Header guard for IO_H
+
 #ifndef IO_H
 #define IO_H
 
-int readInput();
+readInput();
 int writeOutput(char *filePath, float *calcOutput);
 
 #endif
