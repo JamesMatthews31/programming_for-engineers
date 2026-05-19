@@ -12,6 +12,8 @@ Version 0.1.0: First main.c to be able to run from start to finish. Results stil
 
 #include "io.h"
 #include "waveform.h"
+#include <stdio.h>
+#include <windows.h>
 
 int main(){
 

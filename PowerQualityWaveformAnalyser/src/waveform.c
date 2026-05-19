@@ -35,6 +35,14 @@ float storageSetup(double **RMSValues, float **P2PValues, float **DCOffsetValues
 
     }
 
+    for (int i = 0; i < 3; i++){
+
+        // Set DCOffset values to 0, as += is used to assign directly as opposed to = which would lead to innacurate results with heap garbage values
+
+        (*clippingCounts)[i] = 0;
+
+    }
+
     return 0;
 
 }
@@ -126,7 +134,7 @@ float detectClipping(waveform *waveformLog, int sampleCount, int *clippingCounts
 
     // Initialise temp variables
 
-    float phaseAVoltage, phaseBVoltage, phaseCVoltage = 0;
+    double phaseAVoltage, phaseBVoltage, phaseCVoltage = 0;
 
     // Initialise pointer that will go through the array
 
@@ -136,9 +144,9 @@ float detectClipping(waveform *waveformLog, int sampleCount, int *clippingCounts
 
             // Loop through all samples, taking absolute voltage values and comparing them to the clipping limit, and adding to the appropriate counter if it is greater than or equal to it
 
-            phaseAVoltage = abs(readingPointer->phaseAVoltage);
-            phaseBVoltage = abs(readingPointer->phaseBVoltage);
-            phaseCVoltage = abs(readingPointer->phaseCVoltage);
+            phaseAVoltage = fabs(readingPointer->phaseAVoltage);
+            phaseBVoltage = fabs(readingPointer->phaseBVoltage);
+            phaseCVoltage = fabs(readingPointer->phaseCVoltage);
 
             if (phaseAVoltage >= 324.9){
 
@@ -154,13 +162,17 @@ float detectClipping(waveform *waveformLog, int sampleCount, int *clippingCounts
 
             if (phaseCVoltage >= 324.9){
 
-                clippingCounts[2]++;
+                clippingCounts[2]++; 
 
             }
+
+            readingPointer++;
 
         }
 
     return 0;
+
+
 
 }
 
