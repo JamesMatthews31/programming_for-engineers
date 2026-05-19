@@ -47,5 +47,9 @@ float computeDCOffset(waveform *waveformLog, float *DCOffsetValues, int sampleCo
 
 float detectClipping(waveform *waveformLog, int sampleCount, int *clippingCounts); 
 
+// Function to do all of the above functions at once
+
+float calcAll(waveform *waveformLog, double *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts, int sampleCount);
+
 #endif
 // End of header guard

@@ -13,8 +13,8 @@ Log:
 #ifndef IO_H
 #define IO_H
 
-readInput();
-int writeOutput(char *filePath, float *calcOutput);
+int readInput();
+int writeOutput(double *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts, int sampleCount);
 
 #endif
 // End of header guard

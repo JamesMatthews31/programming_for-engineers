@@ -5,7 +5,8 @@ Author: James Matthews
 Date: 15/05/2026
 Version: 0.0.1
 Log:
-- Version 0.0.1: readInput implemented, yet to do output
+- Version 0.0.1: readInput implemented, yet to do output.
+- Version 0.0.2: Tested the program as a whole compiled executable and fixed issue of repeatedly asking for directory by removing secondary pointer definition. And added readInput src code.
 */
 
 #include "io.h"
@@ -75,6 +76,7 @@ int readInput(waveform *waveformLog){
             &waveformLog[count].powerFactor, 
             &waveformLog[count].thdPercent);
         count++;
+        printf("Added");
 
     }
 
@@ -82,6 +84,65 @@ int readInput(waveform *waveformLog){
 
     return lineCount;
 
+}
+
+int writeOutput(double *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts, int sampleCount){
+
+    // Define variables to be used to identify a readable file.
+
+    FILE *filePointer;
+
+    int count = 0;
+    int emptyFile = 0;
+    char fileName[20];
+
+    // Loops until an undefined file is found
+
+    while(emptyFile == 0){
+
+        // Put count into the name of the file so that files arent overwritten in the case of multiple files being filtered
+
+        snprintf(fileName, sizeof(fileName), "outputData%d", count);
+
+        filePointer = fopen(fileName, "r");
+
+        // If the file doesn't exist, end this while loop
+
+        if (filePointer == NULL){
+
+            emptyFile = 1;
+
+        }
+
+        // If the file exists, increment counter and allow the loop to continue
+
+        else{
+
+            count++;
+            fclose(filePointer);
+
+        }
+
+    }
+
+    // Opens the file to write and prints data outputs to it
+
+    filePointer = fopen(fileName, "w");
+
+    fprintf(filePointer, "Analysed data for file at directory");
+    fprintf(filePointer, "%-20s| %-15s| %-15s| %-15s\n", "", "Phase A", "Phase B", "Phase C");
+    fprintf(filePointer, "------------------------------------------------------------------------\n");
+    fprintf(filePointer, "%-20s| %-15.4lf| %-15.4lf| %-15.4lf\n", "RMS (V)", RMSValues[0], RMSValues[1], RMSValues[2]);
+    fprintf(filePointer, "------------------------------------------------------------------------\n");
+    fprintf(filePointer, "%-20s| %-15.4f| %-15.4f| %-15.4f\n", "Peak to peak (V)", P2PValues[0], P2PValues[1], P2PValues[2]);
+    fprintf(filePointer, "------------------------------------------------------------------------\n");
+    fprintf(filePointer, "%-20s| %-15.4f| %-15.4f| %-15.4f\n", "DC Offset (V)", DCOffsetValues[0], DCOffsetValues[1], DCOffsetValues[2]);
+    fprintf(filePointer, "------------------------------------------------------------------------\n");
+    fprintf(filePointer, "%-20s| %-15d| %-15d| %-15d\n", "No. Clipped values", clippingCounts[0], clippingCounts[1], clippingCounts[2]);
+    fprintf(filePointer, "------------------------------------------------------------------------\n");
+    fprintf(filePointer, "Over %d samples", sampleCount);
+
+    fclose(filePointer);
 }
 
 
