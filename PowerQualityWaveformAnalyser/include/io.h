@@ -13,7 +13,9 @@ Log:
 #ifndef IO_H
 #define IO_H
 
-int readInput();
+#include "waveform.h"
+
+int readInput(waveform **waveformLog);
 int writeOutput(double *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts, int sampleCount);
 
 #endif

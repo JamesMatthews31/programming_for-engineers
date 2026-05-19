@@ -5,8 +5,9 @@ Author: James Matthews
 Date: 15/05/2026
 Version: 0.1.0
 Log:
-Version 0.1.0:
+Version 0.0.1:
 - First stage that implementation seems to be complete, any testing yet to be done.
+Version 0.1.0: First main.c to be able to run from start to finish. Results still innacurate
 */
 
 #include "io.h"
@@ -22,7 +23,7 @@ int main(){
     int sampleCount = 0;
 
     sampleCount = readInput(&waveformLog);
-    storageSetup();
+    storageSetup(&RMSValues, &P2PValues, &DCOffsetValues, &clippingCounts);
     calcAll(waveformLog, RMSValues, P2PValues, DCOffsetValues, clippingCounts, sampleCount);
     writeOutput(RMSValues, P2PValues, DCOffsetValues, clippingCounts, sampleCount);
 

@@ -7,13 +7,19 @@ Version: 0.0.1
 Log:
 - Version 0.0.1: readInput implemented, yet to do output.
 - Version 0.0.2: Tested the program as a whole compiled executable and fixed issue of repeatedly asking for directory by removing secondary pointer definition. And added readInput src code.
+- Version 0.0.3: Tested program to check that read input was getting the right amount of data in by printing count. Now reverted as test passed.
+- Version 0.0.4: Changed the management of pointers in readInput as I believe it was not returning hte pointer correctly
+- Version 0.1.0: The code in this file now enables main.c to run from start to finish, providing an output file. Results still innacurate
 */
 
+#define _CRT_SECURE_NO_WARNINGS
 #include "io.h"
 #include "waveform.h"
+#include <windows.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-int readInput(waveform *waveformLog){
+int readInput(waveform **waveformLog){
 
     FILE *filePointer = NULL;
 
@@ -59,7 +65,7 @@ int readInput(waveform *waveformLog){
 
     // Create the array to store the csv file contents in the heap based on lines read
 
-    waveformLog = malloc(lineCount * sizeof(waveform));
+    *waveformLog = malloc(lineCount * sizeof(waveform));
 
     fgets(currentLine, sizeof(currentLine), filePointer);
 
@@ -67,17 +73,17 @@ int readInput(waveform *waveformLog){
     while (fgets(currentLine, sizeof(currentLine), filePointer) != NULL){
 
         sscanf(currentLine, "%f,%lf,%lf,%lf,%lf,%lf,%lf,%lf", 
-            &waveformLog[count].timestamp, 
-            &waveformLog[count].phaseAVoltage, 
-            &waveformLog[count].phaseBVoltage, 
-            &waveformLog[count].phaseCVoltage, 
-            &waveformLog[count].lineCurrent, 
-            &waveformLog[count].frequency, 
-            &waveformLog[count].powerFactor, 
-            &waveformLog[count].thdPercent);
+            &(*waveformLog)[count].timestamp, 
+            &(*waveformLog)[count].phaseAVoltage, 
+            &(*waveformLog)[count].phaseBVoltage, 
+            &(*waveformLog)[count].phaseCVoltage, 
+            &(*waveformLog)[count].lineCurrent, 
+            &(*waveformLog)[count].frequency, 
+            &(*waveformLog)[count].powerFactor, 
+            &(*waveformLog)[count].thdPercent);
         count++;
-        printf("Added");
-
+        printf("%d",count);
+        
     }
 
     fclose(filePointer);
@@ -102,7 +108,7 @@ int writeOutput(double *RMSValues, float *P2PValues, float *DCOffsetValues, int 
 
         // Put count into the name of the file so that files arent overwritten in the case of multiple files being filtered
 
-        snprintf(fileName, sizeof(fileName), "outputData%d", count);
+        snprintf(fileName, sizeof(fileName), "outputData%d.txt", count);
 
         filePointer = fopen(fileName, "r");
 
@@ -143,6 +149,8 @@ int writeOutput(double *RMSValues, float *P2PValues, float *DCOffsetValues, int 
     fprintf(filePointer, "Over %d samples", sampleCount);
 
     fclose(filePointer);
+
+    return 0;
 }
 
 

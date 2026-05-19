@@ -5,33 +5,37 @@ Author: James Matthews
 Date: 15/05/2026
 Version: 0.1.0
 Log:
-Version 0.1.0:
-- First stage that implementation seems to be complete, any testing yet to be done.
+- Version 0.0.1: First stage that implementation seems to be complete, any testing yet to be done.
+- Verions 0.1.0: First set of code that will allow the main.c to run the whole way through. Results still innacurate.
 */
 
 
 #include "waveform.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
 #include <math.h>
 
 // Function to allocate memory to the heap
 
-float storageSetup(float *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts){
+float storageSetup(double **RMSValues, float **P2PValues, float **DCOffsetValues, int **clippingCounts){
 
     // Allocates memory to the heap for storage arrays
 
-    RMSValues = malloc(3 * sizeof(float));
-    P2PValues = malloc(3 * sizeof(float));
-    DCOffsetValues = malloc(3 * sizeof(float));
-    clippingCounts = malloc(3 * sizeof(int));
+    *RMSValues = malloc(3 * sizeof(double));
+    *P2PValues = malloc(3 * sizeof(float));
+    *DCOffsetValues = malloc(3 * sizeof(float));
+    *clippingCounts = malloc(3 * sizeof(int));
 
     for (int i = 0; i < 3; i++){
 
         // Set DCOffset values to 0, as += is used to assign directly as opposed to = which would lead to innacurate results with heap garbage values
 
-        DCOffsetValues[i] = 0;
+        (*DCOffsetValues)[i] = 0;
 
     }
+
+    return 0;
 
 }
 
@@ -41,13 +45,13 @@ float computeRMS(waveform *waveformLog, double *RMSValues, int sampleCount){
 
     //Inintialise temp variables
 
-    double phaseARMS, phaseBRMS, phaseCRMS = 0;
+    double phaseARMS = 0, phaseBRMS = 0, phaseCRMS = 0;
 
     //Initialise pointer that will go through the array.
 
     waveform *readingPointer = waveformLog;
 
-    for (int i = 0; i = sampleCount; i++){
+    for (int i = 0; i < sampleCount; i++){
 
         // Adds the square of the current phase voltage to each counter until the timesamp starts returning a negative value and hence is out of range
        
@@ -71,7 +75,7 @@ float computeRMS(waveform *waveformLog, double *RMSValues, int sampleCount){
 
 // Function to compute the P2P values of each phase
 
-float computeP2P(waveform *waveformLog, float *P2PValues, float *RMSValues,int sampleCount){
+float computeP2P(waveform *waveformLog, float *P2PValues, double *RMSValues,int sampleCount){
 
     // Takes the RMS output of the previous subroutine and multiplies it by 2 sqrt 2 to give peak to peak amplitude
 
@@ -90,7 +94,7 @@ float computeDCOffset(waveform *waveformLog, float *DCOffsetValues, int sampleCo
     //Initialise pointer that will go through the array.
     waveform *readingPointer = waveformLog;
 
-    for (int i = 0; i = sampleCount; i++){
+    for (int i = 0; i < sampleCount; i++){
 
         // Adds all values of voltage for each phase to calculate mean value
 
@@ -112,7 +116,7 @@ float computeDCOffset(waveform *waveformLog, float *DCOffsetValues, int sampleCo
 
     }
 
-    return;
+    return 0;
 
 }
 
@@ -128,7 +132,7 @@ float detectClipping(waveform *waveformLog, int sampleCount, int *clippingCounts
 
     waveform *readingPointer = waveformLog;
 
-    for (int i = 0; i = sampleCount; i++){
+    for (int i = 0; i < sampleCount; i++){
 
             // Loop through all samples, taking absolute voltage values and comparing them to the clipping limit, and adding to the appropriate counter if it is greater than or equal to it
 
@@ -156,7 +160,7 @@ float detectClipping(waveform *waveformLog, int sampleCount, int *clippingCounts
 
         }
 
-    return;
+    return 0;
 
 }
 
@@ -164,11 +168,13 @@ float detectClipping(waveform *waveformLog, int sampleCount, int *clippingCounts
 
 float calcAll(waveform *waveformLog, double *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts, int sampleCount){
 
-    storageSetup(RMSValues, P2PValues, DCOffsetValues, clippingCounts);
-
     computeRMS(waveformLog, RMSValues, sampleCount);
     computeP2P(waveformLog, P2PValues, RMSValues, sampleCount);
     computeDCOffset(waveformLog, DCOffsetValues, sampleCount);
     detectClipping(waveformLog, sampleCount, clippingCounts);
+
+    printf("Storage set up");
+
+    return 0;
 
 }

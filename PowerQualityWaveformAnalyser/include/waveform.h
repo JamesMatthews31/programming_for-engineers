@@ -29,7 +29,7 @@ typedef struct{
 
 // Sets up the arrays that all calculation values are stored in
 
-float storageSetup(void);
+float storageSetup(double **RMSValues, float **P2PValues, float **DCOffsetValues, int **clippingCounts);
 
 // Calculates the RMS value of each phase of voltages. Uses double as input and output as the values are used for P2P
 
@@ -37,7 +37,7 @@ float computeRMS(waveform *waveformLog, double *RMSValues, int sampleCount);
 
 // Calculates the P2P voltage for each phase using 2 sqrt 2
 
-float computeP2P(waveform *waveformLog, float *P2PValues, float *RMSValues,int sampleCount); 
+float computeP2P(waveform *waveformLog, float *P2PValues, double *RMSValues,int sampleCount); 
 
 // Computes the DC offset by adding up all values and dividing my the number of samples
 
