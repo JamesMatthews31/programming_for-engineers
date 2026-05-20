@@ -8,6 +8,7 @@ Log:
 Version 0.0.1:
 - First stage that implementation seems to be complete, any testing yet to be done.
 Version 0.1.0: First main.c to be able to run from start to finish. Results still innacurate
+Version 0.1.1: 
 */
 
 #include "io.h"
@@ -32,6 +33,7 @@ int main(){
     storageSetup(&RMSValues, &P2PValues, &DCOffsetValues, &clippingCounts);
     calcAll(waveformLog, RMSValues, P2PValues, DCOffsetValues, clippingCounts, sampleCount);
     writeOutput(RMSValues, P2PValues, DCOffsetValues, clippingCounts, sampleCount);
+    quickSort(&waveformLog, 0, sampleCount - 1);
 
     return 0;
     

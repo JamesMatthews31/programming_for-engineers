@@ -51,5 +51,18 @@ float detectClipping(waveform *waveformLog, int sampleCount, int *clippingCounts
 
 float calcAll(waveform *waveformLog, double *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts, int sampleCount);
 
+// Function to swap two items
+
+int swap(waveform *a, waveform *b);
+
+// Function to sort an array of values using the quick sort method
+
+int quickSort(waveform **waveformLog, int idxLow, int idxHigh);
+
+// Function to actually do the swapping for the quick sort block
+
+int qSSwaps(waveform **waveformLog, int idxLow, int idxHigh);
+
+
 #endif
 // End of header guard

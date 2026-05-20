@@ -7,6 +7,7 @@ Version: 0.1.0
 Log:
 - Version 0.0.1: First stage that implementation seems to be complete, any testing yet to be done.
 - Verions 0.1.0: First set of code that will allow the main.c to run the whole way through. Results still innacurate.
+- Version 0.1.1: First attempted implementation of quick sort function
 */
 
 
@@ -188,5 +189,65 @@ float calcAll(waveform *waveformLog, double *RMSValues, float *P2PValues, float 
     printf("Storage set up");
 
     return 0;
+
+}
+
+// Function to swap items
+
+int swap(waveform *a, waveform *b){
+
+    // Assign the value at a to the temp variable, then put the value at b into a, then write temp into b
+
+    waveform temp = *a;
+    *a = *b;
+    *b = temp;
+
+    return 0;
+
+}
+
+// Function to sort an array of values using the quick sort method
+
+int quickSort(waveform **waveformLog, int idxLow, int idxHigh){
+
+    if (idxLow < idxHigh){
+
+        // Carry out swapping routine for the sub list
+
+        int boundary = qSSwaps(waveformLog, idxLow, idxHigh);
+
+        // Then call the sort again for the further sub lists created while the low is still the low
+
+        quickSort(waveformLog, boundary + 1, idxHigh);
+        quickSort(waveformLog, idxLow, boundary -1);
+
+    }    
+
+    return 0;
+
+}
+
+// Function to actually do the swapping for the quick sort block
+
+int qSSwaps(waveform **waveformLog, int idxLow, int idxHigh){
+
+    double pivot = (*waveformLog)[idxHigh].phaseAVoltage;
+
+    int currentElements = idxLow - 1;
+
+    for (int i = idxLow; i <= idxHigh; i++){
+
+        if((*waveformLog)[i].phaseAVoltage > pivot){
+
+            currentElements++;
+            swap(&(*waveformLog)[currentElements], &(*waveformLog)[i]);
+
+        }
+
+    }
+
+    swap(&(*waveformLog)[currentElements + 1], &(*waveformLog)[idxHigh]);
+
+    return currentElements + 1;
 
 }
