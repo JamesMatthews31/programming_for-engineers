@@ -21,33 +21,6 @@ Log:
 
 int readInput(waveform **waveformLog){
 
-    // Initialise filePointer that will be used to read the file, and set it to NULL to meet the while loop requirements.
-
-    FILE *filePointer = NULL;
-
-    while (filePointer == NULL){
-
-        // Create temp variable to store filePath directory
-        
-        char filePath[500];
-
-        // Ask user for directory input
-
-        printf("Enter the directory of the .csv file to be analysed: \n");
-
-        // Scan directory into filePath
-
-        scanf("%s", filePath);
-
-        // Connect the file to the pointer to read
-        filePointer = fopen(filePath, "r");
-
-        // Check that file exists and return error if not
-        if (filePointer == NULL){
-            printf("Error, could not open file. Please try again");
-        }
-
-    }
 
     // Initialise variables that will be needed to read the file
     char currentLine[200];
@@ -160,4 +133,35 @@ int writeOutput(double *RMSValues, float *P2PValues, float *DCOffsetValues, int 
     return 0;
 }
 
+void requestDirectory(){
+
+    // Initialise filePointer that will be used to read the file, and set it to NULL to meet the while loop requirements.
+
+    FILE *filePointer = NULL;
+
+    while (filePointer == NULL){
+
+        // Create temp variable to store filePath directory
+        
+        char filePath[500];
+
+        // Ask user for directory input
+
+        printf("Enter the directory to be analysed, either a .csv or a folder: \n");
+
+        // Scan directory into filePath
+
+        scanf("%s", filePath);
+
+        // Connect the file to the pointer to read
+        filePointer = fopen(filePath, "r");
+
+        // Check that file exists and return error if not
+        if (filePointer == NULL){
+            printf("Error, could not open file. Please try again");
+        }
+
+    }
+
+}
 
