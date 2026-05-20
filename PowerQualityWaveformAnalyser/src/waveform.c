@@ -20,7 +20,7 @@ Log:
 
 float storageSetup(double **RMSValues, float **P2PValues, float **DCOffsetValues, int **clippingCounts){
 
-    // Allocates memory to the heap for storage arrays
+    // Allocates memory to the heap for storage arrays, based on data size
 
     *RMSValues = malloc(3 * sizeof(double));
     *P2PValues = malloc(3 * sizeof(float));
@@ -37,7 +37,7 @@ float storageSetup(double **RMSValues, float **P2PValues, float **DCOffsetValues
 
     for (int i = 0; i < 3; i++){
 
-        // Set DCOffset values to 0, as += is used to assign directly as opposed to = which would lead to innacurate results with heap garbage values
+        // Set clippingCount values to 0, as += is used to assign directly as opposed to = which would lead to innacurate results with heap garbage values
 
         (*clippingCounts)[i] = 0;
 

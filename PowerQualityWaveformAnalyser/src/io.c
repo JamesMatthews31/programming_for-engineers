@@ -21,6 +21,8 @@ Log:
 
 int readInput(waveform **waveformLog){
 
+    // Initialise filePointer that will be used to read the file, and set it to NULL to meet the while loop requirements.
+
     FILE *filePointer = NULL;
 
     while (filePointer == NULL){
@@ -81,10 +83,13 @@ int readInput(waveform **waveformLog){
             &(*waveformLog)[count].frequency, 
             &(*waveformLog)[count].powerFactor, 
             &(*waveformLog)[count].thdPercent);
+        // Iterate the count by 1 each time
         count++;
         printf("%d",count);
         
     }
+
+    // Close the file
 
     fclose(filePointer);
 
@@ -106,7 +111,7 @@ int writeOutput(double *RMSValues, float *P2PValues, float *DCOffsetValues, int 
 
     while(emptyFile == 0){
 
-        // Put count into the name of the file so that files arent overwritten in the case of multiple files being filtered
+        // Put count into the name of the file so that files aren't overwritten in the case of multiple files being filtered
 
         snprintf(fileName, sizeof(fileName), "outputData%d.txt", count);
 
@@ -120,7 +125,7 @@ int writeOutput(double *RMSValues, float *P2PValues, float *DCOffsetValues, int 
 
         }
 
-        // If the file exists, increment counter and allow the loop to continue
+        // If the file exists, increment counter, close the file and allow the loop to continue
 
         else{
 
@@ -135,7 +140,9 @@ int writeOutput(double *RMSValues, float *P2PValues, float *DCOffsetValues, int 
 
     filePointer = fopen(fileName, "w");
 
-    fprintf(filePointer, "Analysed data for file at directory");
+    // Use string formatting in output to left align the text, set a number of columns it can use and also to truncate the data to 4dp
+
+    fprintf(filePointer, "Analysed data for file at directory\n");
     fprintf(filePointer, "%-20s| %-15s| %-15s| %-15s\n", "", "Phase A", "Phase B", "Phase C");
     fprintf(filePointer, "------------------------------------------------------------------------\n");
     fprintf(filePointer, "%-20s| %-15.4lf| %-15.4lf| %-15.4lf\n", "RMS (V)", RMSValues[0], RMSValues[1], RMSValues[2]);

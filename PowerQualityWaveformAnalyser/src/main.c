@@ -17,6 +17,8 @@ Version 0.1.0: First main.c to be able to run from start to finish. Results stil
 
 int main(){
 
+    // Define variables to have memory allocated to it
+
     waveform *waveformLog = 0;
     double *RMSValues = 0;
     float *P2PValues = 0;
@@ -24,10 +26,13 @@ int main(){
     int *clippingCounts = 0;
     int sampleCount = 0;
 
+    // Call readInput to get data, then set up memory usig storageSetup, then calcAll. writeOutput based on calcAll output
+
     sampleCount = readInput(&waveformLog);
     storageSetup(&RMSValues, &P2PValues, &DCOffsetValues, &clippingCounts);
     calcAll(waveformLog, RMSValues, P2PValues, DCOffsetValues, clippingCounts, sampleCount);
     writeOutput(RMSValues, P2PValues, DCOffsetValues, clippingCounts, sampleCount);
 
     return 0;
+    
 }
