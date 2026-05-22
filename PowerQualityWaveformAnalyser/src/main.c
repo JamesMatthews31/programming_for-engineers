@@ -27,13 +27,14 @@ int main(){
     int *clippingCounts = 0;
     int sampleCount = 0;
 
-    // Call readInput to get data, then set up memory usig storageSetup, then calcAll. writeOutput based on calcAll output
+    // Call readInput to get data, then set up memory usig storageSetup, then calcAll. writeOutput based on calcAll output, and finally free allocated memory using cleanUp
 
     sampleCount = readInput(&waveformLog);
     storageSetup(&RMSValues, &P2PValues, &DCOffsetValues, &clippingCounts);
     calcAll(waveformLog, RMSValues, P2PValues, DCOffsetValues, clippingCounts, sampleCount);
     writeOutput(RMSValues, P2PValues, DCOffsetValues, clippingCounts, sampleCount);
     quickSort(&waveformLog, 0, sampleCount - 1);
+    cleanUp(waveformLog, RMSValues, P2PValues, DCOffsetValues, clippingCounts);
 
     return 0;
     

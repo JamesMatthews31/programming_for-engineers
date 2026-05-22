@@ -44,7 +44,7 @@ int readInput(waveform **waveformLog){
 
         // Check that file exists and return error if not
         if (filePointer == NULL){
-            printf("Error, could not open file. Please try again");
+            printf("Error, could not open file. Please try again \n");
         }
 
     }
@@ -74,6 +74,8 @@ int readInput(waveform **waveformLog){
     // Iterates through all rows of the csv and uses sscanf to split the entry at commas and immediately assign to the waveform structure array
     while (fgets(currentLine, sizeof(currentLine), filePointer) != NULL){
 
+        printf("%s",currentLine);
+
         sscanf(currentLine, "%f,%lf,%lf,%lf,%lf,%lf,%lf,%lf", 
             &(*waveformLog)[count].timestamp, 
             &(*waveformLog)[count].phaseAVoltage, 
@@ -85,11 +87,13 @@ int readInput(waveform **waveformLog){
             &(*waveformLog)[count].thdPercent);
         // Iterate the count by 1 each time
         count++;
-        printf("%d",count);
+        printf("%d  -   ",count);
         
     }
 
     // Close the file
+
+    Sleep(3000);
 
     fclose(filePointer);
 
@@ -142,7 +146,7 @@ int writeOutput(double *RMSValues, float *P2PValues, float *DCOffsetValues, int 
 
     // Use string formatting in output to left align the text, set a number of columns it can use and also to truncate the data to 4dp
 
-    fprintf(filePointer, "Analysed data for file at directory\n");
+    fprintf(filePointer, "Analysed data for file at directory\n\n");
     fprintf(filePointer, "%-20s| %-15s| %-15s| %-15s\n", "", "Phase A", "Phase B", "Phase C");
     fprintf(filePointer, "------------------------------------------------------------------------\n");
     fprintf(filePointer, "%-20s| %-15.4lf| %-15.4lf| %-15.4lf\n", "RMS (V)", RMSValues[0], RMSValues[1], RMSValues[2]);
@@ -152,7 +156,7 @@ int writeOutput(double *RMSValues, float *P2PValues, float *DCOffsetValues, int 
     fprintf(filePointer, "%-20s| %-15.4f| %-15.4f| %-15.4f\n", "DC Offset (V)", DCOffsetValues[0], DCOffsetValues[1], DCOffsetValues[2]);
     fprintf(filePointer, "------------------------------------------------------------------------\n");
     fprintf(filePointer, "%-20s| %-15d| %-15d| %-15d\n", "No. Clipped values", clippingCounts[0], clippingCounts[1], clippingCounts[2]);
-    fprintf(filePointer, "------------------------------------------------------------------------\n");
+    fprintf(filePointer, "------------------------------------------------------------------------\n\n");
     fprintf(filePointer, "Over %d samples", sampleCount);
 
     fclose(filePointer);
@@ -160,4 +164,16 @@ int writeOutput(double *RMSValues, float *P2PValues, float *DCOffsetValues, int 
     return 0;
 }
 
+int cleanUp(waveform *waveformLog, double *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts){
 
+    // Uses free() to remove all the allocated memory from the heap. Used before the program ends.
+
+    free(waveformLog);
+    free(RMSValues);
+    free(P2PValues);
+    free(DCOffsetValues);
+    free(clippingCounts);
+
+    return 0;
+
+}
