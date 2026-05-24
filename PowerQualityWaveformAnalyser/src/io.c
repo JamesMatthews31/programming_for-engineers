@@ -74,8 +74,6 @@ int readInput(waveform **waveformLog){
     // Iterates through all rows of the csv and uses sscanf to split the entry at commas and immediately assign to the waveform structure array
     while (fgets(currentLine, sizeof(currentLine), filePointer) != NULL){
 
-        printf("%s",currentLine);
-
         sscanf(currentLine, "%f,%lf,%lf,%lf,%lf,%lf,%lf,%lf", 
             &(*waveformLog)[count].timestamp, 
             &(*waveformLog)[count].phaseAVoltage, 
@@ -87,13 +85,10 @@ int readInput(waveform **waveformLog){
             &(*waveformLog)[count].thdPercent);
         // Iterate the count by 1 each time
         count++;
-        printf("%d  -   ",count);
         
     }
 
     // Close the file
-
-    Sleep(3000);
 
     fclose(filePointer);
 
@@ -140,6 +135,20 @@ int writeOutput(double *RMSValues, float *P2PValues, float *DCOffsetValues, int 
 
     }
 
+    // Create a set of tolerance values and check versus RMS, returning the appropriate Y/N value.
+
+    int inToleranceRange[] = {1,1,1};
+
+    for(int i = 0; i < 3; i++){
+
+        if (RMSValues[i] > 253 || RMSValues[i] < 207){
+         
+            inToleranceRange[i] = 0;
+
+        }
+
+    }         
+ 
     // Opens the file to write and prints data outputs to it
 
     filePointer = fopen(fileName, "w");
@@ -154,6 +163,8 @@ int writeOutput(double *RMSValues, float *P2PValues, float *DCOffsetValues, int 
     fprintf(filePointer, "%-20s| %-15.4f| %-15.4f| %-15.4f\n", "Peak to peak (V)", P2PValues[0], P2PValues[1], P2PValues[2]);
     fprintf(filePointer, "------------------------------------------------------------------------\n");
     fprintf(filePointer, "%-20s| %-15.4f| %-15.4f| %-15.4f\n", "DC Offset (V)", DCOffsetValues[0], DCOffsetValues[1], DCOffsetValues[2]);
+    fprintf(filePointer, "------------------------------------------------------------------------\n");
+    fprintf(filePointer, "%-20s| %-15d| %-15d| %-15d\n", "In Tolerance 1/0 Y/N", inToleranceRange[0], inToleranceRange[1], inToleranceRange[2]);
     fprintf(filePointer, "------------------------------------------------------------------------\n");
     fprintf(filePointer, "%-20s| %-15d| %-15d| %-15d\n", "No. Clipped values", clippingCounts[0], clippingCounts[1], clippingCounts[2]);
     fprintf(filePointer, "------------------------------------------------------------------------\n\n");

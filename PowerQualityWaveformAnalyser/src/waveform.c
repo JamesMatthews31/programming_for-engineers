@@ -86,12 +86,81 @@ float computeRMS(waveform *waveformLog, double *RMSValues, int sampleCount){
 
 float computeP2P(waveform *waveformLog, float *P2PValues, double *RMSValues,int sampleCount){
 
-    // Takes the RMS output of the previous subroutine and multiplies it by 2 sqrt 2 to give peak to peak amplitude
+    // Initialise variables for max min and temp values of each phase
 
-    P2PValues[0] = 2 * sqrt(2) * RMSValues[0];
-    P2PValues[1] = 2 * sqrt(2) * RMSValues[1];
-    P2PValues[2] = 2 * sqrt(2) * RMSValues[2];
+    double phaseATemp = 0;
+    double phaseBTemp = 0;
+    double phaseCTemp = 0;  
+    double phaseAMax = 0;
+    double phaseBMax = 0;
+    double phaseCMax = 0;
+    double phaseAMin = 0;
+    double phaseBMin = 0;
+    double phaseCMin =  0;
 
+    // Initialise pointer for reading pointer
+    
+    waveform *readingPointer = waveformLog;
+
+
+    for (int i = 0; i < sampleCount; i++){
+
+        // Assign values to temporary variables for the appropriate phase
+       
+        phaseATemp = readingPointer->phaseAVoltage;
+        phaseBTemp = readingPointer->phaseBVoltage;
+        phaseCTemp = readingPointer->phaseCVoltage;
+
+        // Compare phase A to phaseAMax, and if it is greater that or equal to it set as new value, then do the inverse for min if first condition isnt met
+
+        if (phaseATemp >= phaseAMax){
+
+            phaseAMax = phaseATemp;
+
+        }
+
+        else if(phaseATemp <= phaseAMin){
+            
+            phaseAMin = phaseATemp;
+
+        }
+
+        // Compare phase B to phaseBMax, and if it is greater that or equal to it set as new value, then do the inverse for min if first condition isnt met
+
+        if (phaseBTemp >= phaseBMax){
+
+            phaseBMax = phaseBTemp;
+
+        }
+
+        else if(phaseBTemp <= phaseBMin){
+            
+            phaseBMin = phaseBTemp;
+
+        }
+
+        // Compare phase C to phaseCMax, and if it is greater that or equal to it set as new value, then do the inverse for min if first condition isnt met
+
+        if (phaseCTemp >= phaseCMax){
+
+            phaseCMax = phaseCTemp;
+
+        }
+
+        else if(phaseCTemp <= phaseCMin){
+            
+            phaseCMin = phaseCTemp;
+
+        }
+
+        readingPointer++;
+    }
+
+    // Return outputs to pointers
+
+    P2PValues[0] = (phaseAMax - phaseAMin);
+    P2PValues[1] = (phaseBMax - phaseBMin);
+    P2PValues[2] = (phaseCMax - phaseCMin);
     return 0;
 
 }
@@ -122,7 +191,6 @@ float computeDCOffset(waveform *waveformLog, float *DCOffsetValues, int sampleCo
         // Divide values by 1000 for final output
 
         DCOffsetValues[i] /= sampleCount;
-
     }
 
     return 0;
@@ -231,11 +299,19 @@ int quickSort(waveform **waveformLog, int idxLow, int idxHigh){
 
 int qSSwaps(waveform **waveformLog, int idxLow, int idxHigh){
 
+    // Create the pivot for the quick sort
+
     double pivot = (*waveformLog)[idxHigh].phaseAVoltage;
+
+    // Set min of current elements to go from low to high
 
     int currentElements = idxLow - 1;
 
+    // Iterate through elements
+
     for (int i = idxLow; i <= idxHigh; i++){
+
+        // If current elements is larger than the pivot swap and increment the pivot element counter
 
         if((*waveformLog)[i].phaseAVoltage > pivot){
 
@@ -245,6 +321,8 @@ int qSSwaps(waveform **waveformLog, int idxLow, int idxHigh){
         }
 
     }
+
+    // Swap new pivot end and high end
 
     swap(&(*waveformLog)[currentElements + 1], &(*waveformLog)[idxHigh]);
 
