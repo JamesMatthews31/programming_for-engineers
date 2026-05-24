@@ -10,6 +10,7 @@ Log:
 - Version 0.0.3: Tested program to check that read input was getting the right amount of data in by printing count. Now reverted as test passed.
 - Version 0.0.4: Changed the management of pointers in readInput as I believe it was not returning hte pointer correctly
 - Version 0.1.0: The code in this file now enables main.c to run from start to finish, providing an output file. Results still innacurate
+- Version 0.1.1: Addded cleanUp
 */
 
 #define _CRT_SECURE_NO_WARNINGS
@@ -18,6 +19,8 @@ Log:
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+// Function to read input into the waveform log
 
 int readInput(waveform **waveformLog){
 
@@ -95,6 +98,8 @@ int readInput(waveform **waveformLog){
     return lineCount;
 
 }
+
+// Function to write output to .txt file
 
 int writeOutput(double *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts, int sampleCount){
 
@@ -174,6 +179,8 @@ int writeOutput(double *RMSValues, float *P2PValues, float *DCOffsetValues, int 
 
     return 0;
 }
+
+// Function to clear memory
 
 int cleanUp(waveform *waveformLog, double *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts){
 
