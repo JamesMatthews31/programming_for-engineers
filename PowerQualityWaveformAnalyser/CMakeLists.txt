@@ -12,7 +12,3 @@ set(SOURCES
 )
 
 add_executable(PowerQualityWaveformAnalyser ${SOURCES})
-
-
-#enable_testing()
-#add_subdirectory(test)

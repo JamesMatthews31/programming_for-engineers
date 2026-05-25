@@ -257,7 +257,7 @@ float calcAll(waveform *waveformLog, double *RMSValues, float *P2PValues, float 
     computeDCOffset(waveformLog, DCOffsetValues, sampleCount);
     detectClipping(waveformLog, sampleCount, clippingCounts);
     statAnalysis(waveformLog, varianceValues, standardDevValues, DCOffsetValues, sampleCount);
-    
+
     return 0;
 
 }
@@ -336,17 +336,25 @@ int qSSwaps(waveform **waveformLog, int idxLow, int idxHigh){
 
 int statAnalysis(waveform *waveformLog, float *varianceValues, float *standardDevValues, float *DCOffsetValues, int sampleCount){
 
+    // Declare variables to store sums
+
     double sumValMinusMeanA = 0;
     double sumValMinusMeanB = 0;
     double sumValMinusMeanC = 0;
 
+    // Create pointer to iterate with.
+
     waveform *readingPointer = waveformLog;
+
+    // For every value take the mean from it and square it
 
     for (int i = 0; i < sampleCount; i++){
 
         sumValMinusMeanA += (readingPointer->phaseAVoltage - DCOffsetValues[0]) * (readingPointer->phaseAVoltage - DCOffsetValues[0]);
         sumValMinusMeanB += (readingPointer->phaseBVoltage - DCOffsetValues[1]) * (readingPointer->phaseBVoltage - DCOffsetValues[1]);
         sumValMinusMeanC += (readingPointer->phaseCVoltage - DCOffsetValues[2]) * (readingPointer->phaseCVoltage - DCOffsetValues[2]);
+
+        // Iterate pointer.
 
         readingPointer++;
 
@@ -359,7 +367,7 @@ int statAnalysis(waveform *waveformLog, float *varianceValues, float *standardDe
     varianceValues[1] = sumValMinusMeanB / sampleCount;
     varianceValues[2] = sumValMinusMeanC / sampleCount;
 
-    // And square root to get standard deviations.
+    // And square root to get standard deviations and set as values.
 
     standardDevValues[0] = sqrt(varianceValues[0]);
     standardDevValues[1] = sqrt(varianceValues[1]);

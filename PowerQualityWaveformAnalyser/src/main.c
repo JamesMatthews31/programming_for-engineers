@@ -30,7 +30,7 @@ int main(){
     int sampleCount = 0;
     
 
-    // Call readInput to get data, then set up memory usig storageSetup, then calcAll. writeOutput based on calcAll output, and finally free allocated memory using cleanUp
+    // Call readInput to get data, then set up memory usig storageSetup, then calcAll. writeOutput based on calcAll output, sort internally with no return, and finally free allocated memory using cleanUp
 
     sampleCount = readInput(&waveformLog);
     storageSetup(&RMSValues, &P2PValues, &DCOffsetValues, &clippingCounts, &varianceValues, &standardDevValues);
