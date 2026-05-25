@@ -8,6 +8,7 @@ Log:
 - Version 0.0.1: First stage that implementation seems to be complete, any testing yet to be done.
 - Verions 0.1.0: First set of code that will allow the main.c to run the whole way through. Results still innacurate.
 - Version 0.1.1: First attempted implementation of quick sort function
+- Version 1.0.0: The presumed final version now including standard deviation. Some changes made to setup, calc all to accomodate for this. Stable.
 */
 
 
@@ -19,7 +20,7 @@ Log:
 
 // Function to allocate memory to the heap
 
-float storageSetup(double **RMSValues, float **P2PValues, float **DCOffsetValues, int **clippingCounts){
+float storageSetup(double **RMSValues, float **P2PValues, float **DCOffsetValues, int **clippingCounts, float **varianceValues, float **standardDevValues){
 
     // Allocates memory to the heap for storage arrays, based on data size
 
@@ -27,6 +28,8 @@ float storageSetup(double **RMSValues, float **P2PValues, float **DCOffsetValues
     *P2PValues = malloc(3 * sizeof(float));
     *DCOffsetValues = malloc(3 * sizeof(float));
     *clippingCounts = malloc(3 * sizeof(int));
+    *varianceValues = malloc(3 * sizeof(float));
+    *standardDevValues = malloc(3 * sizeof(float));
 
     for (int i = 0; i < 3; i++){
 
@@ -247,15 +250,14 @@ float detectClipping(waveform *waveformLog, int sampleCount, int *clippingCounts
 
 // Function using all previous functions at once. This is to make main.c cleaner.
 
-float calcAll(waveform *waveformLog, double *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts, int sampleCount){
+float calcAll(waveform *waveformLog, double *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts, float *varianceValues, float *standardDevValues, int sampleCount){
 
     computeRMS(waveformLog, RMSValues, sampleCount);
     computeP2P(waveformLog, P2PValues, RMSValues, sampleCount);
     computeDCOffset(waveformLog, DCOffsetValues, sampleCount);
     detectClipping(waveformLog, sampleCount, clippingCounts);
-
-    printf("Storage set up");
-
+    statAnalysis(waveformLog, varianceValues, standardDevValues, DCOffsetValues, sampleCount);
+    
     return 0;
 
 }
@@ -274,7 +276,7 @@ int swap(waveform *a, waveform *b){
 
 }
 
-// Function to sort an array of values using the quick sort method
+// Function to sort an array of values using the quick sort method, with massive help frok Geeks For Geeks
 
 int quickSort(waveform **waveformLog, int idxLow, int idxHigh){
 
@@ -295,7 +297,7 @@ int quickSort(waveform **waveformLog, int idxLow, int idxHigh){
 
 }
 
-// Function to actually do the swapping for the quick sort block
+// Function to actually do the swapping for the quick sort block, again with massive help from Geeks For Geeks
 
 int qSSwaps(waveform **waveformLog, int idxLow, int idxHigh){
 
@@ -331,4 +333,39 @@ int qSSwaps(waveform **waveformLog, int idxLow, int idxHigh){
 }
 
 // Function to calculate the standard deviation and variance
+
+int statAnalysis(waveform *waveformLog, float *varianceValues, float *standardDevValues, float *DCOffsetValues, int sampleCount){
+
+    double sumValMinusMeanA = 0;
+    double sumValMinusMeanB = 0;
+    double sumValMinusMeanC = 0;
+
+    waveform *readingPointer = waveformLog;
+
+    for (int i = 0; i < sampleCount; i++){
+
+        sumValMinusMeanA += (readingPointer->phaseAVoltage - DCOffsetValues[0]) * (readingPointer->phaseAVoltage - DCOffsetValues[0]);
+        sumValMinusMeanB += (readingPointer->phaseBVoltage - DCOffsetValues[1]) * (readingPointer->phaseBVoltage - DCOffsetValues[1]);
+        sumValMinusMeanC += (readingPointer->phaseCVoltage - DCOffsetValues[2]) * (readingPointer->phaseCVoltage - DCOffsetValues[2]);
+
+        readingPointer++;
+
+
+    }
+
+    // Divide sum by sample count to get final variance values.
+
+    varianceValues[0] = sumValMinusMeanA / sampleCount;
+    varianceValues[1] = sumValMinusMeanB / sampleCount;
+    varianceValues[2] = sumValMinusMeanC / sampleCount;
+
+    // And square root to get standard deviations.
+
+    standardDevValues[0] = sqrt(varianceValues[0]);
+    standardDevValues[1] = sqrt(varianceValues[1]);
+    standardDevValues[2] = sqrt(varianceValues[2]);
+
+    return 0;
+
+}
 

@@ -7,6 +7,7 @@ Version: 0.1
 Log:
 - Version 0.1: All known structs and function prototypes implemented with header guard.
 - Version 0.2: Implemented the sort funcitions and updated all parameters to be accurate.
+- Version 1.0: Presumed final version. Added stat analysis functions.
 */
 
 // Start of header guard.
@@ -30,7 +31,7 @@ typedef struct{
 
 // Sets up the arrays that all calculation values are stored in.
 
-float storageSetup(double **RMSValues, float **P2PValues, float **DCOffsetValues, int **clippingCounts);
+float storageSetup(double **RMSValues, float **P2PValues, float **DCOffsetValues, int **clippingCounts, float **varianceValues, float **standardDevValues);
 
 // Calculates the RMS value of each phase of voltages. Uses double as input and output as the values are used for P2P.
 
@@ -50,7 +51,7 @@ float detectClipping(waveform *waveformLog, int sampleCount, int *clippingCounts
 
 // Function to do all of the above functions at once.
 
-float calcAll(waveform *waveformLog, double *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts, int sampleCount);
+float calcAll(waveform *waveformLog, double *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts, float *varianceValues, float *standardDevValues, int sampleCount);
 
 // Function to swap two items.
 
@@ -64,6 +65,9 @@ int quickSort(waveform **waveformLog, int idxLow, int idxHigh);
 
 int qSSwaps(waveform **waveformLog, int idxLow, int idxHigh);
 
+// Function to calculate variance and hence standard deviation
+
+int statAnalysis(waveform *waveformLog, float *varianceValues, float *standardDevValues, float *DCOffsetValues, int sampleCount);
 
 #endif
 // End of header guard

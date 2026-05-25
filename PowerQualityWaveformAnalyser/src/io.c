@@ -11,6 +11,7 @@ Log:
 - Version 0.0.4: Changed the management of pointers in readInput as I believe it was not returning hte pointer correctly
 - Version 0.1.0: The code in this file now enables main.c to run from start to finish, providing an output file. Results still innacurate
 - Version 0.1.1: Addded cleanUp
+- Version 1.0.0: Presumed final version with updated writeOutput and free memory.
 */
 
 #define _CRT_SECURE_NO_WARNINGS
@@ -101,7 +102,7 @@ int readInput(waveform **waveformLog){
 
 // Function to write output to .txt file
 
-int writeOutput(double *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts, int sampleCount){
+int writeOutput(double *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts, float *varianceValues, float *standardDevValues, int sampleCount){
 
     // Define variables to be used to identify a readable file.
 
@@ -172,6 +173,10 @@ int writeOutput(double *RMSValues, float *P2PValues, float *DCOffsetValues, int 
     fprintf(filePointer, "%-20s| %-15d| %-15d| %-15d\n", "In Tolerance 1/0 Y/N", inToleranceRange[0], inToleranceRange[1], inToleranceRange[2]);
     fprintf(filePointer, "------------------------------------------------------------------------\n");
     fprintf(filePointer, "%-20s| %-15d| %-15d| %-15d\n", "No. Clipped values", clippingCounts[0], clippingCounts[1], clippingCounts[2]);
+    fprintf(filePointer, "------------------------------------------------------------------------\n");
+    fprintf(filePointer, "%-20s| %-15.4f| %-15.4f| %-15.4f\n", "Variance", varianceValues[0], varianceValues[1], varianceValues[2]);
+    fprintf(filePointer, "------------------------------------------------------------------------\n");
+    fprintf(filePointer, "%-20s| %-15.4f| %-15.4f| %-15.4f\n", "Standard Deviation", standardDevValues[0], standardDevValues[1], standardDevValues[2]);
     fprintf(filePointer, "------------------------------------------------------------------------\n\n");
     fprintf(filePointer, "Over %d samples", sampleCount);
 
@@ -182,7 +187,7 @@ int writeOutput(double *RMSValues, float *P2PValues, float *DCOffsetValues, int 
 
 // Function to clear memory
 
-int cleanUp(waveform *waveformLog, double *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts){
+int cleanUp(waveform *waveformLog, double *RMSValues, float *P2PValues, float *DCOffsetValues, int *clippingCounts, float *varianceValues, float *standardDevValues){
 
     // Uses free() to remove all the allocated memory from the heap. Used before the program ends.
 
@@ -191,6 +196,8 @@ int cleanUp(waveform *waveformLog, double *RMSValues, float *P2PValues, float *D
     free(P2PValues);
     free(DCOffsetValues);
     free(clippingCounts);
+    free(varianceValues);
+    free(standardDevValues);
 
     return 0;
 
