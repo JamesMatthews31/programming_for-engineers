@@ -7,4 +7,5 @@ This will then provide the compiled to be used.
 
 Notes on certain outputs.
  - If an empty .csv file is parsed it will not provide normal outputs for RMS and offset, and instead -nan(ind). This is equivalent to a blank output due to an error with division by 0.
- - 
+ - Link to repo - https://github.com/JamesMatthews31/programming_for-engineers
+ - The .csv files must have a header row otherwise the first row will be void

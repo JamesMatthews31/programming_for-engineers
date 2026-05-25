@@ -25,6 +25,7 @@ int main(){
     float *DCOffsetValues = 0;
     int *clippingCounts = 0;
     int sampleCount = 0;
+    
 
     // Call readInput to get data, then set up memory usig storageSetup, then calcAll. writeOutput based on calcAll output, and finally free allocated memory using cleanUp
 

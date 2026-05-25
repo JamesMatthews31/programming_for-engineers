@@ -153,7 +153,6 @@ float computeP2P(waveform *waveformLog, float *P2PValues, double *RMSValues,int 
 
         }
 
-        readingPointer++;
     }
 
     // Return outputs to pointers
@@ -161,6 +160,7 @@ float computeP2P(waveform *waveformLog, float *P2PValues, double *RMSValues,int 
     P2PValues[0] = (phaseAMax - phaseAMin);
     P2PValues[1] = (phaseBMax - phaseBMin);
     P2PValues[2] = (phaseCMax - phaseCMin);
+
     return 0;
 
 }
@@ -329,3 +329,6 @@ int qSSwaps(waveform **waveformLog, int idxLow, int idxHigh){
     return currentElements + 1;
 
 }
+
+// Function to calculate the standard deviation and variance
+
